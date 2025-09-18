@@ -123,6 +123,53 @@ function lerpScrollY() {
 
 //// C) Movimiento de cámara con mouse (fricción) aka "Gaze Camera".
 
+// 1. Crear un objeto con la data referente al MOUSE para ocuparla en todos lados.
+var mouse = {
+   x: 0,
+   y: 0,
+   normalOffset: {
+       x: 0,
+       y: 0
+   },
+   lerpNormalOffset: {
+       x: 0,
+       y: 0
+   },
+
+   cof: 0.07,
+   gazeRange: {
+       x: 7,
+       y: 3
+   }
+}
+// 2. Leer posición del mouse y calcular distancia del mouse al centro.
+function updateMouseData(eventData) {
+   updateMousePosition(eventData);
+   calculateNormalOffset();
+}
+function updateMousePosition(eventData) {
+   mouse.x = eventData.clientX;
+   mouse.y = eventData.clientY;
+}
+function calculateNormalOffset() {
+   let windowCenter = {
+       x: canvas.width / 2,
+       y: canvas.height / 2,
+   }
+   mouse.normalOffset.x = ( (mouse.x - windowCenter.x) / canvas.width ) * 2;
+   mouse.normalOffset.y = ( (mouse.y - windowCenter.y) / canvas.height ) * 2;
+}
+
+window.addEventListener("mousemove", updateMouseData);
+
+// 3. Aplicar valor calculado a la posición de la cámara. (en el loop de animación)
+function updateCameraPosition() {
+   camera.position.x = mouse.normalOffset.x * mouse.gazeRange.x;
+   camera.position.y = -mouse.normalOffset.y * mouse.gazeRange.y;
+}
+
+
+
 ///////// FIN DE LA CLASE.
 
 
@@ -134,6 +181,8 @@ function animate() {
     //mesh.rotation.x -= 0.005;
     lerpScrollY();
     updateMeshRotation();
+    updateCameraPosition();
+    camera.lookAt(mesh.position);
     renderer.render(scene, camera);
 }
 
