@@ -95,6 +95,31 @@ function createMaterial() {
 
 
 //// B) Rotación al scrollear.
+// 1. Crear un objeto con la data referente al SCROLL para ocuparla en todos lados.
+var scroll = {
+   y: 0,
+   lerpedY: 0,
+   speed: 0.005,
+   cof: 0.07 // coeficiente de fricción.
+};
+
+// 2. Escuchar el evento scroll y actualizar el valor del scroll.
+function updateScrollData(eventData) {
+   scroll.y += eventData.deltaX * scroll.speed;
+}
+
+window.addEventListener("wheel", updateScrollData);
+
+// 3. Aplicar el valor del scroll a la rotación del mesh. (en el loop de animación)
+function updateMeshRotation() {
+   mesh.rotation.y = scroll.lerpedY;
+}
+
+// 5. Vamos a suavizar un poco el valor de rotación para que los cambios de dirección sean menos bruscos.
+function lerpScrollY() {
+   scroll.lerpedY += (scroll.y - scroll.lerpedY) * scroll.cof;
+}
+
 
 //// C) Movimiento de cámara con mouse (fricción) aka "Gaze Camera".
 
@@ -106,8 +131,9 @@ function createMaterial() {
 function animate() {
     requestAnimationFrame(animate);
 
-    mesh.rotation.x -= 0.005;
-
+    //mesh.rotation.x -= 0.005;
+    lerpScrollY();
+    updateMeshRotation();
     renderer.render(scene, camera);
 }
 
