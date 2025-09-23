@@ -22,6 +22,16 @@
     background-color: #2020cc;
 }
 
+#material {
+    position: absolute;
+    top: 100px; 
+    left: 50px;
+    color: rgb(0, 0, 0);
+    background-color: #0068ef;
+    padding: 15px 50px;
+}
+
+
 header {
     position: absolute;
     top: 0; left: 0;
