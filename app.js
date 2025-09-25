@@ -76,17 +76,35 @@ const tex = {
    displacement: loader.load('./assets/texturas/bricks/displacement.png'),
 };
 
+const tex02 = {
+   albedo: loader.load('./assets/texturas/alien/albedo.png'),
+   ao: loader.load('./assets/texturas/alien/ao.png'),
+   metalness: loader.load('./assets/texturas/alien/metallic.png'),
+   normal: loader.load('./assets/texturas/alien/normal.png'),
+   roughness: loader.load('./assets/texturas/alien/roughness.png'),
+   displacement: loader.load('./assets/texturas/alien/displacement.png'),
+};
+
+const tex03 = {
+   albedo: loader.load('./assets/texturas/verde/albedo.png'),
+   ao: loader.load('./assets/texturas/verde/ao.png'),
+   metalness: loader.load('./assets/texturas/verde/metallic.png'),
+   normal: loader.load('./assets/texturas/verde/normal.png'),
+   roughness: loader.load('./assets/texturas/verde/roughness.png'),
+   displacement: loader.load('./assets/texturas/verde/displacement.png'),
+};
+
 // 4. Definimos variables y la función que va a crear el material al cargar las texturas.
 var pbrMaterial;
 
 function createMaterial() {
    pbrMaterial = new THREE.MeshStandardMaterial({
-       map: tex.albedo,
-       aoMap: tex.ao,
-       metalnessMap: tex.metalness,
-       normalMap: tex.normal,
-       roughnessMap: tex.roughness,
-       displacementMap: tex.displacement,
+       map: tex03.albedo,
+       aoMap: tex03.ao,
+       metalnessMap: tex03.metalness,
+       normalMap: tex03.normal,
+       roughnessMap: tex03.roughness,
+       displacementMap: tex03.displacement,
        displacementScale: 0.4,
        side: THREE.FrontSide,
        // wireframe: true,
@@ -172,6 +190,7 @@ function updateCameraPosition() {
 
 
 // Configura un evento al hacer click sobre el canvas y usa GSAP para animar el mesh.
+
 canvas.addEventListener("click", () => {
    gsap.to(mesh.scale, { x: 2, y: 2, z: 2, duration: 0.5, ease: "bounce.out" });
    gsap.to(mesh.scale, { x: 1, y: 1, z: 1, duration: 0.5, delay: 0.5, ease: "bounce.out" }
