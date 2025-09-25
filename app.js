@@ -172,6 +172,11 @@ function updateCameraPosition() {
 
 
 // Configura un evento al hacer click sobre el canvas y usa GSAP para animar el mesh.
+canvas.addEventListener("click", () => {
+   gsap.to(mesh.scale, { x: 2, y: 2, z: 2, duration: 0.5, ease: "bounce.out" });
+   gsap.to(mesh.scale, { x: 1, y: 1, z: 1, duration: 0.5, delay: 0.5, ease: "bounce.out" }
+   );
+});
 
 
 ///////// FIN DE LA CLASE.
