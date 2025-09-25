@@ -12,7 +12,7 @@ canvas.height = window.innerHeight;
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ canvas: canvas });
 renderer.setSize(canvas.width, canvas.height);
-renderer.setClearColor("#0a0c2c");
+renderer.setClearColor("#000000ff");
 const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000);
 
 // 3.1 Configurar mesh.
@@ -55,19 +55,19 @@ manager.onProgress = function (url, itemsLoaded, itemsTotal) {
 };
 
 manager.onLoad = function () {
-   console.log('✅ ¡Todas las texturas cargadas!');
+   console.log('¡Todas las texturas cargadas!');
    createMaterial();
 };
 
 manager.onError = function (url) {
-   console.error(`❌ Error al cargar: ${url}`);
+   console.error(` Error al cargar: ${url}`);
 };
  
 // 2. "Texture loader" para nuestros assets.
 const loader = new THREE.TextureLoader(manager);
 
 // 3. Cargamos texturas guardadas en el folder del proyecto.
-const tex = {
+const ladrillosTex = {
    albedo: loader.load('./assets/texturas/bricks/albedo.png'),
    ao: loader.load('./assets/texturas/bricks/ao.png'),
    metalness: loader.load('./assets/texturas/bricks/metallic.png'),
@@ -76,7 +76,7 @@ const tex = {
    displacement: loader.load('./assets/texturas/bricks/displacement.png'),
 };
 
-const tex02 = {
+const alienTex = {
    albedo: loader.load('./assets/texturas/alien/albedo.png'),
    ao: loader.load('./assets/texturas/alien/ao.png'),
    metalness: loader.load('./assets/texturas/alien/metallic.png'),
@@ -85,7 +85,7 @@ const tex02 = {
    displacement: loader.load('./assets/texturas/alien/displacement.png'),
 };
 
-const tex03 = {
+const verdetex = {
    albedo: loader.load('./assets/texturas/verde/albedo.png'),
    ao: loader.load('./assets/texturas/verde/ao.png'),
    metalness: loader.load('./assets/texturas/verde/metallic.png'),
@@ -94,23 +94,35 @@ const tex03 = {
    displacement: loader.load('./assets/texturas/verde/displacement.png'),
 };
 
+const metalTex = {
+   albedo: loader.load('./assets/texturas/metal/albedo.png'),
+   ao: loader.load('./assets/texturas/metal/ao.png'),
+   metalness: loader.load('./assets/texturas/metal/metallic.png'),
+   normal: loader.load('./assets/texturas/metal/normal.png'),
+   roughness: loader.load('./assets/texturas/metal/roughness.png'),
+   displacement: loader.load('./assets/texturas/metal/displacement.png'),
+};
+
 // 4. Definimos variables y la función que va a crear el material al cargar las texturas.
-var pbrMaterial;
+var ladrillosMaterial;
 
 function createMaterial() {
-   pbrMaterial = new THREE.MeshStandardMaterial({
-       map: tex03.albedo,
-       aoMap: tex03.ao,
-       metalnessMap: tex03.metalness,
-       normalMap: tex03.normal,
-       roughnessMap: tex03.roughness,
-       displacementMap: tex03.displacement,
+   ladrilloMaterial = new THREE.MeshStandardMaterial({
+       map: metalTex.albedo,
+       aoMap: metalTex.ao,
+       metalnessMap: metalTex.metalness,
+       normalMap: metalTex.normal,
+       roughnessMap: metalTex.roughness,
+       displacementMap: metalTex.displacement,
+
+
+
        displacementScale: 0.4,
        side: THREE.FrontSide,
        // wireframe: true,
    });
 
-   mesh.material = pbrMaterial;
+   mesh.material = ladrilloMaterial;
 }
 
 
@@ -192,8 +204,8 @@ function updateCameraPosition() {
 // Configura un evento al hacer click sobre el canvas y usa GSAP para animar el mesh.
 
 canvas.addEventListener("click", () => {
-   gsap.to(mesh.scale, { x: 2, y: 2, z: 2, duration: 0.5, ease: "bounce.out" });
-   gsap.to(mesh.scale, { x: 1, y: 1, z: 1, duration: 0.5, delay: 0.5, ease: "bounce.out" }
+   gsap.to(mesh.scale, { x: 2, y: 2, z: 2, duration: 0.5, ease: "power1.out" });
+   gsap.to(mesh.scale, { x: 1, y: 1, z: 1, duration: 0.5, delay: 0.5, ease: "power1.out" }
    );
 });
 
@@ -206,7 +218,7 @@ canvas.addEventListener("click", () => {
 function animate() {
     requestAnimationFrame(animate);
 
-    //mesh.rotation.x -= 0.005;
+    mesh.rotation.x -= 0.005;
     lerpScrollY();
     updateMeshRotation();
     updateCameraPosition();
