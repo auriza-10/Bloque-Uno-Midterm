@@ -171,6 +171,8 @@ function updateCameraPosition() {
 }
 
 
+// Configura un evento al hacer click sobre el canvas y usa GSAP para animar el mesh.
+
 
 ///////// FIN DE LA CLASE.
 
