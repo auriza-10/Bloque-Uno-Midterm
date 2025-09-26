@@ -209,6 +209,13 @@ canvas.addEventListener("click", () => {
    );
 });
 
+// La tecla w activa y desactiva el modo "wireframe" de los materiales.
+window.addEventListener("keydown", (event) => {
+   if (event.key === "w") {
+       mesh.material.wireframe = !mesh.material.wireframe;
+   }
+});
+
 
 ///////// FIN DE LA CLASE.
 
