@@ -16,7 +16,7 @@ body {
     box-sizing: border-box;
     font-family: 'Rubik Broken Fax', cursive;
     text-transform: uppercase;
-    color: aqua;
+    color: rgb(0, 13, 255);
 }
 
 #lienzo {
