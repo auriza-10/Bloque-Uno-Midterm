@@ -1,9 +1,7 @@
-@font-face {
-  font-family: "Formula";
-  src:
-    local("Formula"),
-    url("./assets/fonts/PPFormula-CondensedBlack.otf") format("opentype");
-}
+
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Prop+Double+Ink:wght@100..900&display=swap');
+
+
 
 body {
     position: fixed;
@@ -15,7 +13,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Formula", sans-serif;
+    font-family: "Bitcount Prop Doble Ink";
     text-transform: uppercase;
     color: aqua;
 }
