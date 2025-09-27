@@ -30,7 +30,7 @@ scene.add(mesh);
 mesh.position.z = -7;
 
 // 3.2 Crear luces.
-const frontLight = new THREE.PointLight("#ff0000ff", 300, 100);
+const frontLight = new THREE.PointLight("#ffffff", 300, 100);
 frontLight.position.set(7, 3, 3);
 scene.add(frontLight);
 
