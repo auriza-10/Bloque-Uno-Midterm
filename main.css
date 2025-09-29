@@ -14,7 +14,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Rubik Broken Fax', cursive;
+    font-family: 'Bitcount Prop Double Ink', sans-serif;
     text-transform: uppercase;
     color: rgb(0, 13, 255);
 }
@@ -84,12 +84,12 @@ ul, li {
     background-size: cover;
 }
 
-#ladrillo {
-    background-image: url(./assets/texturas/bricks/albedo.png);
+#luna {
+    background-image: url(./assets/texturas/luna/albedo.png);
 }
 
-#verde {
-    background-image: url(./assets/texturas/verde/albedo.png);
+#cuadrado {
+    background-image: url(./assets/texturas/cuadrado/albedo.png);
 }   
 
 #alien {

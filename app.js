@@ -30,11 +30,11 @@ scene.add(mesh);
 mesh.position.z = -7;
 
 // 3.2 Crear luces.
-const frontLight = new THREE.PointLight("#00ff37ff", 300, 100);
+const frontLight = new THREE.PointLight("#ffffffff", 300, 100);
 frontLight.position.set(7, 3, 3);
 scene.add(frontLight);
 
-const rimLight = new THREE.PointLight("#00bc03ff", 50, 100);
+const rimLight = new THREE.PointLight("#0004ffff", 50, 100);
 rimLight.position.set(-7, -3, -7);
 scene.add(rimLight);
 
@@ -67,13 +67,13 @@ manager.onError = function (url) {
 const loader = new THREE.TextureLoader(manager);
 
 // 3. Cargamos texturas guardadas en el folder del proyecto.
-const ladrillosTex = {
-   albedo: loader.load('./assets/texturas/bricks/albedo.png'),
-   ao: loader.load('./assets/texturas/bricks/ao.png'),
-   metalness: loader.load('./assets/texturas/bricks/metallic.png'),
-   normal: loader.load('./assets/texturas/bricks/normal.png'),
-   roughness: loader.load('./assets/texturas/bricks/roughness.png'),
-   displacement: loader.load('./assets/texturas/bricks/displacement.png'),
+const lunaTex = {
+   albedo: loader.load('./assets/texturas/luna/albedo.png'),
+   ao: loader.load('./assets/texturas/luna/ao.png'),
+   metalness: loader.load('./assets/texturas/luna/metallic.png'),
+   normal: loader.load('./assets/texturas/luna/normal.png'),
+   roughness: loader.load('./assets/texturas/luna/roughness.png'),
+   displacement: loader.load('./assets/texturas/luna/displacement.png'),
 };
 
 const alienTex = {
@@ -85,13 +85,13 @@ const alienTex = {
    displacement: loader.load('./assets/texturas/alien/displacement.png'),
 };
 
-const verdetex = {
-   albedo: loader.load('./assets/texturas/verde/albedo.png'),
-   ao: loader.load('./assets/texturas/verde/ao.png'),
-   metalness: loader.load('./assets/texturas/verde/metallic.png'),
-   normal: loader.load('./assets/texturas/verde/normal.png'),
-   roughness: loader.load('./assets/texturas/verde/roughness.png'),
-   displacement: loader.load('./assets/texturas/verde/displacement.png'),
+const cuadradoTex = {
+   albedo: loader.load('./assets/texturas/cuadrado/albedo.png'),
+   ao: loader.load('./assets/texturas/cuadrado/ao.png'),
+   metalness: loader.load('./assets/texturas/cuadrado/metallic.png'),
+   normal: loader.load('./assets/texturas/cuadrado/normal.png'),
+   roughness: loader.load('./assets/texturas/cuadrado/roughness.png'),
+   displacement: loader.load('./assets/texturas/cuadrado/displacement.png'),
 };
 
 const metalTex = {
@@ -108,12 +108,12 @@ var ladrillosMaterial;
 
 function createMaterial() {
    ladrilloMaterial = new THREE.MeshStandardMaterial({
-       map: metalTex.albedo,
-       aoMap: metalTex.ao,
-       metalnessMap: metalTex.metalness,
-       normalMap: metalTex.normal,
-       roughnessMap: metalTex.roughness,
-       displacementMap: metalTex.displacement,
+       map: cuadradoTex.albedo,
+       aoMap: cuadradoTex.ao,
+       metalnessMap: cuadradoTex.metalness,
+       normalMap: cuadradoTex.normal,
+       roughnessMap: cuadradoTex.roughness,
+       displacementMap: cuadradoTex.displacement,
 
 
 
@@ -205,7 +205,7 @@ function updateCameraPosition() {
 
 canvas.addEventListener("click", () => {
    gsap.to(mesh.scale, { x: 2, y: 2, z: 2, duration: 0.5, ease: "power1.out" });
-   gsap.to(mesh.scale, { x: 1, y: 1, z: 1, duration: 0.5, delay: 0.5, ease: "power1.out" }
+   gsap.to(mesh.scale, { x: 1, y: 1, z: 1, duration: 0.5, delay: 1, ease: "power1.out" }
    );
 });
 
