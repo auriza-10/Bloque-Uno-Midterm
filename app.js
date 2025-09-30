@@ -12,61 +12,41 @@ canvas.height = window.innerHeight;
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ canvas: canvas });
 renderer.setSize(canvas.width, canvas.height);
-renderer.setClearColor("#ffffffff");
+renderer.setClearColor("rgba(250, 245, 245, 1)");
 const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000);
 
 // 3.1 Configurar mesh.
-//const geo = new THREE.TorusKnotGeometry(1, 0.35, 128, 5, 2);
-//const geo = new THREE.SphereGeometry(1.5, 128, 128);
 const geo = new THREE.TorusGeometry(1.5, 0.5, 32, 100);
-//const geo = new THREE.CapsuleGeometry(1, 3, 32, 32);
 
 const material = new THREE.MeshStandardMaterial({
-    color: "#ffffff",
- //   wireframe: true,
+    color: "rgba(255, 255, 255, 1)",
 });
 const mesh = new THREE.Mesh(geo, material);
 scene.add(mesh);
 mesh.position.z = -7;
 
 // 3.2 Crear luces.
-const frontLight = new THREE.PointLight("#ffffffff", 300, 100);
+const frontLight = new THREE.PointLight("rgba(223, 222, 222, 1)", 300, 100);
 frontLight.position.set(7, 3, 3);
 scene.add(frontLight);
 
-const rimLight = new THREE.PointLight("#0004ffff", 50, 100);
+const rimLight = new THREE.PointLight("rgba(0, 4, 255, 1)", 50, 100);
 rimLight.position.set(-7, -3, -7);
 scene.add(rimLight);
-
-
 
 ///////// EN CLASE.
 
 //// A) Cargar múltiples texturas.
-// 1. "Loading manager".
 const manager = new THREE.LoadingManager();
-
-manager.onStart = function (url, itemsLoaded, itemsTotal) {
-   console.log(`Iniciando carga de: ${url} (${itemsLoaded + 1}/${itemsTotal})`);
-};
-
-manager.onProgress = function (url, itemsLoaded, itemsTotal) {
-   console.log(`Cargando: ${url} (${itemsLoaded}/${itemsTotal})`);
-};
 
 manager.onLoad = function () {
    console.log('¡Todas las texturas cargadas!');
    createMaterial();
 };
-
-manager.onError = function (url) {
-   console.error(` Error al cargar: ${url}`);
-};
  
-// 2. "Texture loader" para nuestros assets.
 const loader = new THREE.TextureLoader(manager);
 
-// 3. Cargamos texturas guardadas en el folder del proyecto.
+// Texturas
 const lunaTex = {
    albedo: loader.load('./assets/texturas/luna/albedo.png'),
    ao: loader.load('./assets/texturas/luna/ao.png'),
@@ -103,78 +83,88 @@ const metalTex = {
    displacement: loader.load('./assets/texturas/metal/displacement.png'),
 };
 
-// 4. Definimos variables y la función que va a crear el material al cargar las texturas.
-var ladrillosMaterial;
+// Variables globales para materiales
+var cuadradosMaterial, lunaMaterial, alienMaterial, metalMaterial;
 
 function createMaterial() {
-   ladrilloMaterial = new THREE.MeshStandardMaterial({
+   cuadradosMaterial = new THREE.MeshStandardMaterial({
        map: cuadradoTex.albedo,
        aoMap: cuadradoTex.ao,
        metalnessMap: cuadradoTex.metalness,
        normalMap: cuadradoTex.normal,
        roughnessMap: cuadradoTex.roughness,
        displacementMap: cuadradoTex.displacement,
-
-
-
        displacementScale: 0.4,
        side: THREE.FrontSide,
-       // wireframe: true,
    });
 
-   mesh.material = ladrilloMaterial;
+   lunaMaterial = new THREE.MeshStandardMaterial({
+       map: lunaTex.albedo,
+       aoMap: lunaTex.ao,
+       metalnessMap: lunaTex.metalness,
+       normalMap: lunaTex.normal,
+       roughnessMap: lunaTex.roughness,
+       displacementMap: lunaTex.displacement,
+       displacementScale: 0.4,
+       side: THREE.FrontSide,
+   });
+
+   alienMaterial = new THREE.MeshStandardMaterial({
+       map: alienTex.albedo,
+       aoMap: alienTex.ao,
+       metalnessMap: alienTex.metalness,
+       normalMap: alienTex.normal,
+       roughnessMap: alienTex.roughness,
+       displacementMap: alienTex.displacement,
+       displacementScale: 0.4,
+       side: THREE.FrontSide,
+   });
+
+   metalMaterial = new THREE.MeshStandardMaterial({
+       map: metalTex.albedo,
+       metalnessMap: metalTex.metalness,
+       normalMap: metalTex.normal,
+       roughnessMap: metalTex.roughness,
+       metalness: 1,
+       roughness: 1,
+       side: THREE.DoubleSide,
+   });
+
+   // Material inicial
+   mesh.material = cuadradosMaterial;
 }
 
-
 //// B) Rotación al scrollear.
-// 1. Crear un objeto con la data referente al SCROLL para ocuparla en todos lados.
 var scroll = {
    y: 0,
    lerpedY: 0,
    speed: 0.005,
-   cof: 0.07 // coeficiente de fricción.
+   cof: 0.07
 };
 
-// 2. Escuchar el evento scroll y actualizar el valor del scroll.
 function updateScrollData(eventData) {
    scroll.y += eventData.deltaX * scroll.speed;
 }
-
 window.addEventListener("wheel", updateScrollData);
 
-// 3. Aplicar el valor del scroll a la rotación del mesh. (en el loop de animación)
 function updateMeshRotation() {
    mesh.rotation.y = scroll.lerpedY;
 }
 
-// 5. Vamos a suavizar un poco el valor de rotación para que los cambios de dirección sean menos bruscos.
 function lerpScrollY() {
    scroll.lerpedY += (scroll.y - scroll.lerpedY) * scroll.cof;
 }
 
-
-//// C) Movimiento de cámara con mouse (fricción) aka "Gaze Camera".
-
-// 1. Crear un objeto con la data referente al MOUSE para ocuparla en todos lados.
+//// C) Movimiento de cámara con mouse
 var mouse = {
    x: 0,
    y: 0,
-   normalOffset: {
-       x: 0,
-       y: 0
-   },
-   lerpNormalOffset: {
-       x: 0,
-       y: 0
-   },
-
+   normalOffset: { x: 0, y: 0 },
+   lerpNormalOffset: { x: 0, y: 0 },
    cof: 0.07,
-   gazeRange: {
-       x: 7,
-       y: 3
-   }
-}
-// 2. Leer posición del mouse y calcular distancia del mouse al centro.
+   gazeRange: { x: 7, y: 3 }
+};
+
 function updateMouseData(eventData) {
    updateMousePosition(eventData);
    calculateNormalOffset();
@@ -184,44 +174,56 @@ function updateMousePosition(eventData) {
    mouse.y = eventData.clientY;
 }
 function calculateNormalOffset() {
-   let windowCenter = {
-       x: canvas.width / 2,
-       y: canvas.height / 2,
-   }
-   mouse.normalOffset.x = ( (mouse.x - windowCenter.x) / canvas.width ) * 2;
-   mouse.normalOffset.y = ( (mouse.y - windowCenter.y) / canvas.height ) * 2;
+   let windowCenter = { x: canvas.width / 2, y: canvas.height / 2 };
+   mouse.normalOffset.x = ((mouse.x - windowCenter.x) / canvas.width) * 2;
+   mouse.normalOffset.y = ((mouse.y - windowCenter.y) / canvas.height) * 2;
 }
-
 window.addEventListener("mousemove", updateMouseData);
 
-// 3. Aplicar valor calculado a la posición de la cámara. (en el loop de animación)
 function updateCameraPosition() {
    camera.position.x = mouse.normalOffset.x * mouse.gazeRange.x;
    camera.position.y = -mouse.normalOffset.y * mouse.gazeRange.y;
 }
 
-
-// Configura un evento al hacer click sobre el canvas y usa GSAP para animar el mesh.
-
+// Click en canvas
 canvas.addEventListener("click", () => {
    gsap.to(mesh.scale, { x: 2, y: 2, z: 2, duration: 0.5, ease: "power1.out" });
-   gsap.to(mesh.scale, { x: 1, y: 1, z: 1, duration: 0.5, delay: 1, ease: "power1.out" }
-   );
+   gsap.to(mesh.scale, { x: 1, y: 1, z: 1, duration: 0.5, delay: 1, ease: "power1.out" });
 });
 
-// La tecla w activa y desactiva el modo "wireframe" de los materiales.
+// Wireframe con tecla W
 window.addEventListener("keydown", (event) => {
    if (event.key === "w") {
        mesh.material.wireframe = !mesh.material.wireframe;
    }
 });
 
+// Botones
+const cuadradosButton = document.getElementById("cuadrado");
+cuadradosButton.addEventListener("mousedown", function() {
+   mesh.material = cuadradosMaterial;
+   mesh.material.needsUpdate = true;
+});
 
-///////// FIN DE LA CLASE.
+const alienButton = document.getElementById("alien");
+alienButton.addEventListener("mousedown", function() {
+   mesh.material = alienMaterial;
+   mesh.material.needsUpdate = true;
+});
 
+const lunaButton = document.getElementById("luna");
+lunaButton.addEventListener("mousedown", function() {
+   mesh.material = lunaMaterial;
+   mesh.material.needsUpdate = true;
+});
 
-/////////
-// Final. Crear loop de animación para renderizar constantemente la escena.
+const metalButton = document.getElementById("metal");
+metalButton.addEventListener("mousedown", function() {
+   mesh.material = metalMaterial;
+   mesh.material.needsUpdate = true;
+});
+
+///////// LOOP DE ANIMACIÓN
 function animate() {
     requestAnimationFrame(animate);
 
