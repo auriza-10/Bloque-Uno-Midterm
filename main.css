@@ -16,7 +16,6 @@ body {
     box-sizing: border-box;
     font-family: 'Special Gothic Expanded One', sans-serif;
     text-transform: uppercase;
-    color: #ffffff;
 }
 
 #lienzo {
@@ -25,8 +24,6 @@ body {
     width: 100%;
     height: 100%;
 }
-
-
 
 header {
     position: absolute;
@@ -44,6 +41,7 @@ header {
     font-weight: lighter;
     -webkit-font-smoothing: antialiased;
     font-smooth: always;
+    color: #ffffff;
 }
 
 footer {
@@ -57,6 +55,7 @@ footer {
     position: relative;
     padding: 2vh 0 0 2vh;
     font-size: 10vh;
+    color: rgb(251, 251, 252);
 }
 
 #centroLogo {
@@ -116,4 +115,5 @@ ul, li {
     font-size: 3vh;
     margin-bottom: 1vh;
     font-weight: bold;
+      color: #282ed9;
 }
