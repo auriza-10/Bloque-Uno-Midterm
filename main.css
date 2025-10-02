@@ -41,7 +41,7 @@ header {
     font-weight: lighter;
     -webkit-font-smoothing: antialiased;
     font-smooth: always;
-    color: #ffffff;
+    color: #181ee2;
 }
 
 footer {
@@ -55,7 +55,7 @@ footer {
     position: relative;
     padding: 2vh 0 0 2vh;
     font-size: 10vh;
-    color: rgb(251, 251, 252);
+    color: rgb(45, 83, 252);
 }
 
 #centroLogo {
@@ -115,5 +115,5 @@ ul, li {
     font-size: 3vh;
     margin-bottom: 1vh;
     font-weight: bold;
-      color: #282ed9;
+    color: #282ed9;
 }
