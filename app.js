@@ -88,7 +88,6 @@ function createMaterial() {
        aoMap: cuadradoTex.ao,
        metalnessMap: cuadradoTex.metalness,
        normalMap: cuadradoTex.normal,
-       roughnessMap: cuadradoTex.roughness,
        displacementMap: cuadradoTex.displacement,
        displacementScale: 0.4,
        side: THREE.FrontSide,
@@ -96,7 +95,6 @@ function createMaterial() {
 
    lunaMaterial = new THREE.MeshStandardMaterial({
        map: lunaTex.albedo,
-       aoMap: lunaTex.ao,
        metalnessMap: lunaTex.metalness,
        normalMap: lunaTex.normal,
        roughnessMap: lunaTex.roughness,
@@ -110,7 +108,6 @@ function createMaterial() {
        aoMap: alienTex.ao,
        metalnessMap: alienTex.metalness,
        normalMap: alienTex.normal,
-       roughnessMap: alienTex.roughness,
        displacementMap: alienTex.displacement,
        displacementScale: 0.4,
        side: THREE.FrontSide,
