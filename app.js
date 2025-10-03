@@ -49,7 +49,6 @@ const loader = new THREE.TextureLoader(manager);
 // Texturas
 const lunaTex = {
    albedo: loader.load('./assets/texturas/luna/albedo.png'),
-   ao: loader.load('./assets/texturas/luna/ao.png'),
    metalness: loader.load('./assets/texturas/luna/metallic.png'),
    normal: loader.load('./assets/texturas/luna/normal.png'),
    roughness: loader.load('./assets/texturas/luna/roughness.png'),
@@ -61,7 +60,6 @@ const alienTex = {
    ao: loader.load('./assets/texturas/alien/ao.png'),
    metalness: loader.load('./assets/texturas/alien/metallic.png'),
    normal: loader.load('./assets/texturas/alien/normal.png'),
-   roughness: loader.load('./assets/texturas/alien/roughness.png'),
    displacement: loader.load('./assets/texturas/alien/displacement.png'),
 };
 
@@ -70,7 +68,6 @@ const cuadradoTex = {
    ao: loader.load('./assets/texturas/cuadrado/ao.png'),
    metalness: loader.load('./assets/texturas/cuadrado/metallic.png'),
    normal: loader.load('./assets/texturas/cuadrado/normal.png'),
-   roughness: loader.load('./assets/texturas/cuadrado/roughness.png'),
    displacement: loader.load('./assets/texturas/cuadrado/displacement.png'),
 };
 
@@ -80,7 +77,6 @@ const metalTex = {
    metalness: loader.load('./assets/texturas/metal/metallic.png'),
    normal: loader.load('./assets/texturas/metal/normal.png'),
    roughness: loader.load('./assets/texturas/metal/roughness.png'),
-   displacement: loader.load('./assets/texturas/metal/displacement.png'),
 };
 
 // Variables globales para materiales
