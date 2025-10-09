@@ -44,7 +44,11 @@ manager.onLoad = function () {
    createMaterial();
 };
  
+// texture loader para nuestros assets
 const loader = new THREE.TextureLoader(manager);
+
+// configurar cube texture loader
+const cubeTexLoader = new THREE.CubeTextureLoader(manager);
 
 // Texturas
 const lunaTex = {
@@ -79,11 +83,24 @@ const metalTex = {
    roughness: loader.load('./assets/texturas/metal/roughness.png'),
 };
 
+// Cargue cube texture
+const envMap = cubeTexLoader.load([
+   './assets/texturas/fondo/posx.jpg', './assets/texturas/fondo/negx.jpg',   // +X, -X
+   './assets/texturas/fondo/posy.jpg', './assets/texturas/fondo/negy.jpg',   // +Y, -Y
+   './assets/texturas/fondo/posz.jpg', './assets/texturas/fondo/negz.jpg'    // +Z, -Z
+]);
+
+scene.background = envMap;
+
 // Variables globales para materiales
 var cuadradosMaterial, lunaMaterial, alienMaterial, metalMaterial;
 
 function createMaterial() {
    cuadradosMaterial = new THREE.MeshStandardMaterial({
+       envMap: envMap,
+       metalness: 0.8,
+       roughness: 0.4,
+
        map: cuadradoTex.albedo,
        aoMap: cuadradoTex.ao,
        metalnessMap: cuadradoTex.metalness,
@@ -91,9 +108,14 @@ function createMaterial() {
        displacementMap: cuadradoTex.displacement,
        displacementScale: 0.4,
        side: THREE.FrontSide,
+
    });
 
    lunaMaterial = new THREE.MeshStandardMaterial({
+       envMap: envMap,
+       metalness: 0.8,
+       roughness: 0.4,
+
        map: lunaTex.albedo,
        metalnessMap: lunaTex.metalness,
        normalMap: lunaTex.normal,
@@ -101,19 +123,29 @@ function createMaterial() {
        displacementMap: lunaTex.displacement,
        displacementScale: 0.4,
        side: THREE.FrontSide,
+
    });
 
    alienMaterial = new THREE.MeshStandardMaterial({
+       envMap: envMap,
+       metalness: 0.8,
+       roughness: 0.4,
+
        map: alienTex.albedo,
        aoMap: alienTex.ao,
        metalnessMap: alienTex.metalness,
        normalMap: alienTex.normal,
        displacementMap: alienTex.displacement,
        displacementScale: 0.4,
-       side: THREE.FrontSide,
+       side: THREE.DoubleSide,
+
    });
 
    metalMaterial = new THREE.MeshStandardMaterial({
+       envMap: envMap,
+       metalness: 0.8,
+       roughness: 0.4,
+
        map: metalTex.albedo,
        metalnessMap: metalTex.metalness,
        normalMap: metalTex.normal,
@@ -121,6 +153,7 @@ function createMaterial() {
        metalness: 1,
        roughness: 1,
        side: THREE.DoubleSide,
+
    });
 
    // Material inicial
@@ -229,3 +262,35 @@ function animate() {
 }
 
 animate();
+
+
+// 1. Crear una función con las instrucciones para actualizar el tamaño de nuestro canvas.
+
+function updateCanvasSize() {
+   canvas.width = window.innerWidth;
+   canvas.height = window.innerHeight;
+}
+
+// 2. Crear otra función para actualizar la resolución de nuestro renderizador.
+
+function updateRenderer() {
+   renderer.setSize(canvas.width, canvas.height);
+
+   // actualizar pixel ratio (para pantallas retina, pero limitar a 2 para rendimiento)
+   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+}
+
+// 3. Crear otra función para actualizar la relación aspecto de la cámara.
+
+function updateCameraAspect() {
+   camera.aspect = canvas.width / canvas.height;
+   camera.updateProjectionMatrix();
+}
+
+// 4. Definir un event listener al “resize” para ejecutar las 3 funciones que creamos en los pasos anteriores.
+
+window.addEventListener("resize", function() {
+   updateCanvasSize();
+   updateRenderer();
+   updateCameraAspect();
+});

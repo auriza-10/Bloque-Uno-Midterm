@@ -54,7 +54,7 @@ footer {
 .subtitle {
     position: relative;
     padding: 2vh 0 0 2vh;
-    font-size: 10vh;
+    font-size: 8vw;
     color: rgb(200, 210, 255);
 }
 
@@ -71,14 +71,14 @@ ul, li {
 
 #materials {
     position: absolute;
-    top: 30%;
+    top: 25%;
     left: 5vh;
 }
 
 .materialSwitch {
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background-size: cover;
 }
 
@@ -104,7 +104,7 @@ ul, li {
     right: 2vh;
     width: 20vw;
     padding: 2vh;
-    font-size: 1.8vh;
+    font-size: 1vw;
     line-height: 1.5em;
     color: #ffffff;
     border-radius: 1vh;
@@ -112,7 +112,7 @@ ul, li {
 }
 
 #instructions h2 {
-    font-size: 3vh;
+    font-size: 2vw;
     margin-bottom: 1vh;
     font-weight: bold;
     color: #282ed9;
